@@ -8,7 +8,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 # import sys
 
 
-def create_img_xml(path_to_img, progress_bar, duration=15):
+def create_img_xml(path_to_img, progress_bar, duration=2):
     path_to_img = path_to_img + '/'
     images_list = []
 
