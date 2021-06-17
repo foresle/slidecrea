@@ -83,6 +83,10 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         # Ініцілізація кнопок
         self.selectImagesPathButton.clicked.connect(self.select_images_path_button)
         self.createXMLImagesFileButton.clicked.connect(self.create_xml_images_file_button)
+        self.btnOpenGnomeTweaks.clicked.connect(self.open_gnome_tweks)
+
+    def open_gnome_tweks(self):
+        os.system('gnome-tweaks')
 
     def select_images_path_button(self):
         self.lineEditImagesPath.setText(str(QtWidgets.QFileDialog.getExistingDirectory()))
@@ -90,7 +94,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     def create_xml_images_file_button(self):
         self.createXMLImagesFileButton.setEnabled(False)
         self.selectImagesPathButton.setEnabled(False)
-        create_img_xml(self.lineEditImagesPath.text(), self.progressBarIImagesXML)
+        create_img_xml(self.lineEditImagesPath.text(), self.progressBarIImagesXML, duration=self.spinSlideDuration.value())
         time.sleep(1)
         self.createXMLImagesFileButton.setEnabled(True)
         self.selectImagesPathButton.setEnabled(True)
