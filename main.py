@@ -1,3 +1,4 @@
+import datetime
 import os
 import time
 from xml.etree import ElementTree
@@ -26,19 +27,54 @@ def create_img_xml(path_to_img, progress_bar, duration=15):
     progress_bar.setValue(progres_value)
     progres_deltax = int(100/len(images_list))
 
+    xml_start_time = ElementTree.SubElement(xml_parent, 'starttime')
+    xml_start_time_year = ElementTree.SubElement(xml_start_time, 'year')
+    xml_start_time_month = ElementTree.SubElement(xml_start_time, 'month')
+    xml_start_time_day = ElementTree.SubElement(xml_start_time, 'day')
+    xml_start_time_hour = ElementTree.SubElement(xml_start_time, 'hour')
+    xml_start_time_minute = ElementTree.SubElement(xml_start_time, 'minute')
+    xml_start_time_second = ElementTree.SubElement(xml_start_time, 'second')
+    datetime_now = datetime.datetime.now()
+    xml_start_time_year.text = str(datetime_now.strftime('%Y'))
+    xml_start_time_month.text = str(datetime_now.strftime('%m'))
+    xml_start_time_day.text = str(datetime_now.strftime('%d'))
+    xml_start_time_hour.text = str(datetime_now.strftime('%H'))
+    xml_start_time_minute.text = '00'
+    xml_start_time_second.text = '00'
+
+    image_id = 0
     for image in images_list:
         xml_static = ElementTree.SubElement(xml_parent, 'static')
         xml_static_duration = ElementTree.SubElement(xml_static, 'duration')
         xml_static_file = ElementTree.SubElement(xml_static, 'file')
-        xml_static_duration.text = str(duration) + '.0' if duration == int(duration) else str(duration)
+        xml_static_duration.text = str(duration) # + '.0' if duration == int(duration) else str(duration)
         xml_static_file.text = str(os.path.abspath(image))
 
+        if image_id != len(images_list)-1:
+            xml_transition = ElementTree.SubElement(xml_parent,'transition')
+            xml_transition_duration = ElementTree.SubElement(xml_transition, 'duration')
+            xml_transition_from = ElementTree.SubElement(xml_transition, 'from')
+            xml_transition_to = ElementTree.SubElement(xml_transition, 'to')
+            xml_transition_duration.text = '5.0'
+            xml_transition_from.text = str(os.path.abspath(image))
+            xml_transition_to.text = str(os.path.abspath(images_list[image_id+1]))
+        else:
+            xml_transition = ElementTree.SubElement(xml_parent,'transition')
+            xml_transition_duration = ElementTree.SubElement(xml_transition, 'duration')
+            xml_transition_from = ElementTree.SubElement(xml_transition, 'from')
+            xml_transition_to = ElementTree.SubElement(xml_transition, 'to')
+            xml_transition_duration.text = '5.0'
+            xml_transition_from.text = str(os.path.abspath(image))
+            xml_transition_to.text = str(os.path.abspath(images_list[0]))
+
+
+        image_id+=1
         progres_value += progres_deltax
         progress_bar.setValue(progres_value)
 
     xml_tree = ElementTree.ElementTree(xml_parent)
     xml_tree.write(path_to_img + 'wallpapers_list.xml')
-
+    '00'
     progres_value = 100
     progress_bar.setValue(progres_value)
 
