@@ -12,6 +12,8 @@ def create_img_xml(path_to_img, progress_bar, duration=15):
     path_to_img = path_to_img + '/'
     images_list = []
 
+    duration = duration*60
+
     for obj in os.listdir(path_to_img):
         if obj[-3:] == 'jpg' or obj[-3:] == 'png' or obj[-4:] == 'jpeg':
             images_list.append(path_to_img + obj)
