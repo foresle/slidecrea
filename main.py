@@ -79,6 +79,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     def __init__(self):
         super().__init__()
         self.setupUi(self)
+        self.setWindowIcon(QtGui.QIcon('slidecrea.ico'))
 
         # Ініцілізація кнопок
         self.selectImagesPathButton.clicked.connect(self.select_images_path_button)

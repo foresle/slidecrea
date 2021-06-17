@@ -1,0 +1,1 @@
+pyinstaller --onefile --clean -w --name="slidecrea" main.py --add-data "slidecrea.ico:slidecrea.ico"
