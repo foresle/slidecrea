@@ -63,7 +63,7 @@ def create_img_xml(path_to_img, progress_bar, duration=15):
             xml_transition_duration = ElementTree.SubElement(xml_transition, 'duration')
             xml_transition_from = ElementTree.SubElement(xml_transition, 'from')
             xml_transition_to = ElementTree.SubElement(xml_transition, 'to')
-            xml_transition_duration.text = '5.0'
+            xml_transition_duration.text = '2.0'
             xml_transition_from.text = str(os.path.abspath(image))
             xml_transition_to.text = str(os.path.abspath(images_list[0]))
 
